@@ -8,12 +8,12 @@ describe Cielo::Token do
   describe 'create a token for a card' do
     it 'delivers an successful message and have a card token' do
       response = VCR.use_cassette('create_credit_card_token', preserve_exact_body_bytes: true) do
-        token.create!(card_params, :store)
+        Cielo::Token.create(card_params, :store)
       end
 
-      expect(response[:"retorno-token"][:token][:"dados-token"][:"codigo-token"]).to be_eql('l34tEKLz5inbugHGkpZx6I1kBZW8qoysmfxiyN8zhO8=')
-      expect(response[:"retorno-token"][:token][:"dados-token"][:"numero-cartao-truncado"]).to be_eql('401200******3335')
-      expect(response[:"retorno-token"][:token][:"dados-token"][:status]).to be_eql('1')
+      expect(response.id).to eq('l34tEKLz5inbugHGkpZx6I1kBZW8qoysmfxiyN8zhO8=')
+      expect(response.masked_card).to eq('401200******3335')
+      expect(response.status).to eq('1')
     end
   end
 end

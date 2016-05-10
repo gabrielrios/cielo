@@ -10,13 +10,12 @@ describe Cielo::Transaction do
       allow(Cielo).to receive(:numero_afiliacao).and_return('1006993069')
       allow(Cielo).to receive(:chave_acesso).and_return('25fbb99741c739dd84d7b06ec78c9bac718838630f30b112d033ce2e621b34f3')
 
-      token = Cielo::Token.new
-      VCR.use_cassette('create_credit_card_token', preserve_exact_body_bytes: true) do
-        token.create! credit_card_params, :store
+      token = VCR.use_cassette('create_credit_card_token', preserve_exact_body_bytes: true) do
+        Cielo::Token.create credit_card_params, :store
       end
 
       @transaction = Cielo::Transaction.new
-      @token_code = token.response[:"retorno-token"][:token][:"dados-token"][:"codigo-token"]
+      @token_code = token.id
     end
 
     it 'delivers a successful message - Autorizar sem passar por autenticação' do
