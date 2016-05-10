@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://qasecommerce.cielo.com.br/servicos/ecommwsec.do
+    body:
+      encoding: US-ASCII
+      base64_string: |
+        bWVuc2FnZW09PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgi
+        Pz48cmVxdWlzaWNhby10b2tlbiBpZD0iMTQ2MjkxNTcxNCIgdmVyc2FvPSIx
+        LjIuMSI+PGRhZG9zLWVjPjxudW1lcm8+MTAwMTczNDg5ODwvbnVtZXJvPjxj
+        aGF2ZT5lODQ4MjcxMzBiOTgzNzQ3MzY4MWMyNzg3MDA3ZGE1OTE0ZDYzNTk5
+        NDcwMTVhNWNkYjJiODg0M2RiMGZhODMyPC9jaGF2ZT48L2RhZG9zLWVjPjxk
+        YWRvcy1wb3J0YWRvcj48bnVtZXJvLz48dmFsaWRhZGUvPjxub21lLXBvcnRh
+        ZG9yLz48L2RhZG9zLXBvcnRhZG9yPjwvcmVxdWlzaWNhby10b2tlbj4=
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 May 2016 21:28:35 GMT
+      Server:
+      - Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/0.9.8e-fips-rhel5
+      Content-Length:
+      - '349'
+      Set-Cookie:
+      - JSESSIONID=6vF4XySD6kVj1NpyGtfPnQNtXprnTJLJ6yLYz2CGJ3GwMn1VCQJN!-1116938711;
+        path=/; HttpOnly
+      X-Powered-By:
+      - Servlet/2.5 JSP/2.1
+      Content-Type:
+      - text/xml; charset=ISO-8859-1
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSI/Pgo8
+        ZXJybyB4bWxucz0iaHR0cDovL2Vjb21tZXJjZS5jYm1wLmNvbS5iciIgaWQ9
+        IiI+PGNvZGlnbz4wMDE8L2NvZGlnbz48bWVuc2FnZW0+PCFbQ0RBVEFbCk8g
+        WE1MIGluZm9ybWFkbyBu428g6SB2YWxpZG86Ci0gc3RyaW5nIGxlbmd0aCAo
+        MCkgaXMgbGVzcyB0aGFuIG1pbkxlbmd0aCBmYWNldCAoMSkgZm9yIHR5cGUg
+        b2Ygbm9tZS1wb3J0YWRvciBlbGVtZW50IGluIERhZG9zQ2FydGFvIGluIG5h
+        bWVzcGFjZSBodHRwOi8vZWNvbW1lcmNlLmNibXAuY29tLmJyOiAnPHhtbC1m
+        cmFnbWVudC8+JwpdXT48L21lbnNhZ2VtPjwvZXJybz4NCg==
+    http_version: 
+  recorded_at: Tue, 10 May 2016 21:28:34 GMT
+recorded_with: VCR 3.0.1

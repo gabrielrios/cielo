@@ -21,8 +21,8 @@ module Cielo
       end
 
       response = connection.make_request!(message)
-      if response.has_key?("error")
-        Erro.new(response)
+      if response.has_key?(:erro)
+        raise Cielo::Error.new(response[:erro])
       else
         args = response[:"retorno-token"][:token][:"dados-token"]
         new(args[:"codigo-token"], args[:"numero-cartao-truncado"], args[:status])

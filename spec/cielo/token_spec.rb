@@ -16,4 +16,13 @@ describe Cielo::Token do
       expect(response.status).to eq('1')
     end
   end
+
+  it 'raises error without paramters' do
+    expect do
+      VCR.use_cassette('create_empty_token', preserve_exact_body_bytes: true) do
+        Cielo::Token.create
+      end
+    end.to raise_error(Cielo::Error, /XML informado não é valido/)
+  end
+
 end
