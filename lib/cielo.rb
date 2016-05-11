@@ -6,7 +6,7 @@ require 'net/http'
 require 'net/https'
 require 'rexml/document'
 require 'builder'
-[:error, :connection, :transaction, :token].each { |lib| require "cielo/#{lib}" }
+[:error, :connection, :transaction, :transaction_batch, :token].each { |lib| require "cielo/#{lib}" }
 
 module Cielo
   class Production
