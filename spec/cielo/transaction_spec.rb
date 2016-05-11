@@ -24,7 +24,7 @@ describe Cielo::Transaction do
       response = VCR.use_cassette('buy_page_create_transaction', preserve_exact_body_bytes: true) do
         @transaction.create! params, :store
       end
-      
+
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:autenticacao][:eci]).to eql('7') # 7 is when transactions was not autenticated
       expect(response[:transacao][:autenticacao][:mensagem]).to eql('Transacao sem autenticacao')
@@ -42,7 +42,7 @@ describe Cielo::Transaction do
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:token][:"dados-token"][:"codigo-token"]).to_not be_nil
     end
-  
+
     it 'creates a recurring transaction with token' do
       params = default_params.merge(token: @token_code, autorizar: 4) # autorizar: 4 - recurring transaction
 
@@ -121,7 +121,7 @@ describe Cielo::Transaction do
     it 'returns null when no tid is informed' do
       expect(@transaction.cancel!(nil)).to be_nil
     end
-  
+
     it 'cancels a transaction' do
       response = VCR.use_cassette('cielo_buy_page_cancel_transaction', preserve_exact_body_bytes: true) do
         create_response = @transaction.create! default_params

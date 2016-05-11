@@ -13,16 +13,21 @@ module Cielo
     end
 
     def create!(parameters = {}, buy_page = :cielo)
+      analysis_parameters(parameters, buy_page)
+      message = build_xml(parameters, buy_page)
+      @connection.make_request!(message)
+    end
+
+    def build_xml(parameters = {}, buy_page = :cielo)
       if buy_page == :store
-        store_page_create!(parameters)
+        build_store_xml(parameters)
       else
-        cielo_page_create!(parameters)
+        build_cielo_xml(parameters)
       end
     end
 
-    def store_page_create!(parameters = {})
-      analysis_parameters(parameters, :buy_page_store)
-      message = @connection.xml_builder('requisicao-transacao') do |xml, target|
+    def build_store_xml(parameters)
+      @connection.xml_builder('requisicao-transacao') do |xml, target|
         if target == :after
           xml.tag!('dados-portador') do
             if parameters[:token].present?
@@ -39,16 +44,12 @@ module Cielo
           default_transaction_xml(xml, parameters)
         end
       end
-
-      @connection.make_request! message
     end
 
-    def cielo_page_create!(parameters = {})
-      analysis_parameters(parameters, :buy_page_cielo)
-      message = @connection.xml_builder('requisicao-transacao') do |xml, target|
+    def build_cielo_xml(parameters = {})
+      @connection.xml_builder('requisicao-transacao') do |xml, target|
         default_transaction_xml(xml, parameters) if target == :after
       end
-      @connection.make_request! message
     end
 
     def verify!(cielo_tid)
@@ -113,10 +114,10 @@ module Cielo
       xml.tag!('gerar-token', parameters[:"gerar-token"])
     end
 
-    def analysis_parameters(parameters = {}, buy_page = :buy_page_cielo)
+    def analysis_parameters(parameters = {}, buy_page = :cielo)
       to_analyze = [:numero, :valor, :bandeira, :"url-retorno"]
 
-      if buy_page == :buy_page_store
+      if buy_page == :store
         if parameters[:token].present?
           to_analyze.concat([:token])
         else
