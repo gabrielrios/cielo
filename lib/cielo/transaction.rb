@@ -15,47 +15,12 @@ module Cielo
 
     attr_reader :parameters, :buy_page
 
+    def xml(type = :raw)
+      build_xml_for(type).target!
+    end
+
     def create!
-      @connection.make_request!(xml_object)
-    end
-
-    def xml
-      xml_object.target!
-    end
-
-    def xml_object
-      return @xml if @xml.present?
-      @xml = if buy_page == :store
-                build_store_xml
-              else
-                build_cielo_xml
-              end
-    end
-
-    def build_store_xml
-      @connection.xml_builder('requisicao-transacao') do |xml, target|
-        if target == :after
-          xml.tag!('dados-portador') do
-            if parameters[:token].present?
-              xml.tag!('token', parameters[:token])
-            else
-              xml.tag!('numero', parameters[:cartao_numero])
-              xml.tag!('validade', parameters[:cartao_validade])
-              xml.tag!('indicador', parameters[:cartao_indicador])
-              xml.tag!('codigo-seguranca', parameters[:cartao_seguranca])
-              xml.tag!('nome-portador', parameters[:cartao_portador])
-              xml.tag!('token', '')
-            end
-          end
-          default_transaction_xml(xml)
-        end
-      end
-    end
-
-    def build_cielo_xml
-      @connection.xml_builder('requisicao-transacao') do |xml, target|
-        default_transaction_xml(xml) if target == :after
-      end
+      @connection.make_request!(build_xml_for(:request))
     end
 
     def verify!(cielo_tid)
@@ -102,6 +67,40 @@ module Cielo
     end
 
     private
+    def build_xml_for(type)
+      _proc = method("build_#{buy_page}_xml")
+      if type == :request
+        @connection.xml_builder('requisicao-transacao', &_proc)
+      else
+        builder = Builder::XmlMarkup.new
+        builder.tag!('requisicao-transacao') { _proc.call(builder, :after) }
+        builder
+      end
+    end
+
+    def build_store_xml(xml, target)
+      if target == :after
+        xml.tag!('dados-portador') do
+          if parameters[:token].present?
+            xml.tag!('token', parameters[:token])
+          else
+            xml.tag!('numero', parameters[:cartao_numero])
+            xml.tag!('validade', parameters[:cartao_validade])
+            xml.tag!('indicador', parameters[:cartao_indicador])
+            xml.tag!('codigo-seguranca', parameters[:cartao_seguranca])
+            xml.tag!('nome-portador', parameters[:cartao_portador])
+            xml.tag!('token', '')
+          end
+        end
+        default_transaction_xml(xml)
+      end
+    end
+
+    def build_cielo_xml(xml, target)
+      if target == :after
+        default_transaction_xml(xml)
+      end
+    end
 
     def default_transaction_xml(xml)
       xml.tag!('dados-pedido') do

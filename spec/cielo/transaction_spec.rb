@@ -69,7 +69,7 @@ describe Cielo::Transaction do
       expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
 
       response = VCR.use_cassette('buy_page_requisicao_captura', preserve_exact_body_bytes: true) do
-        Cielo::Transaction.new.catch!(response[:transacao][:tid])
+        Cielo::Transaction.new(:store).catch!(response[:transacao][:tid])
       end
     end
 
@@ -78,7 +78,7 @@ describe Cielo::Transaction do
 
       response = VCR.use_cassette('buy_page_verify_by_number', preserve_exact_body_bytes: true) do
         _create_response = Cielo::Transaction.new(:store, params).create!
-        Cielo::Transaction.new.verify_by_number!('1')
+        Cielo::Transaction.new(:store).verify_by_number!('1')
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
@@ -94,19 +94,19 @@ describe Cielo::Transaction do
 
     it 'delivers a successful message' do
       response = VCR.use_cassette('cielo_buy_page_create_authorization_transaction', preserve_exact_body_bytes: true) do
-        Cielo::Transaction.new(default_params).create!
+        Cielo::Transaction.new(:cielo, default_params).create!
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
       response = VCR.use_cassette('cielo_buy_page_requisicao_captura', preserve_exact_body_bytes: true) do
-        Cielo::Transaction.new.catch!(response[:transacao][:tid])
+        Cielo::Transaction.new(:cielo).catch!(response[:transacao][:tid])
       end
     end
 
     it 'verify the transaction' do
       response = VCR.use_cassette('cielo_buy_page_verify_transaction', preserve_exact_body_bytes: true) do
-        Cielo::Transaction.new.verify!('100173489800002FDF7A')
+        Cielo::Transaction.new(:cielo).verify!('100173489800002FDF7A')
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
@@ -114,13 +114,13 @@ describe Cielo::Transaction do
     end
 
     it 'returns null when no tid is informed' do
-      expect(Cielo::Transaction.new.cancel!(nil)).to be_nil
+      expect(Cielo::Transaction.new(:cielo).cancel!(nil)).to be_nil
     end
 
     it 'cancels a transaction' do
       response = VCR.use_cassette('cielo_buy_page_cancel_transaction', preserve_exact_body_bytes: true) do
-        create_response = Cielo::Transaction.new(default_params).create!
-        Cielo::Transaction.new.cancel!(create_response[:transacao][:tid])
+        create_response = Cielo::Transaction.new(:cielo, default_params).create!
+        Cielo::Transaction.new(:cielo).cancel!(create_response[:transacao][:tid])
       end
 
       # Erro 42 - Cancelamento Não está funcionando em ambiente de teste.
@@ -151,6 +151,21 @@ describe Cielo::Transaction do
       @connection2 = Cielo::Connection.new '0100100100', 'e84827130b9837473681c2787007da5914d6359947015a5cdb2b8843db0fa800'
       expect(@connection2.numero_afiliacao).to be_eql '0100100100'
       expect(@connection2.chave_acesso).to be_eql 'e84827130b9837473681c2787007da5914d6359947015a5cdb2b8843db0fa800'
+    end
+  end
+
+  context "XML Generation" do
+    it 'does not include access information for non request xml' do
+      transaction = Cielo::Transaction.new(:store, default_params.merge(credit_card_params))
+      expect(transaction.xml).to_not match(/dados-ec/)
+      expect(transaction.xml).to match(/dados-portador/)
+    end
+
+    it 'does include access information for request xml' do
+      transaction = Cielo::Transaction.new(:store, default_params.merge(credit_card_params))
+      expect(transaction.xml(:request)).to match(/xml/)
+      expect(transaction.xml(:request)).to match(/dados-ec/)
+      expect(transaction.xml).to match(/dados-portador/)
     end
   end
 end
