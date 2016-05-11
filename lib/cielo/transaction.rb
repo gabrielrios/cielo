@@ -1,32 +1,38 @@
 require 'bigdecimal'
+require 'pry'
 module Cielo
   class Transaction
     attr_reader :numero_afiliacao
     attr_reader :chave_acesso
     attr_reader :versao
 
-    def initialize(numero_afiliacao = Cielo.numero_afiliacao, chave_acesso = Cielo.chave_acesso, versao = '1.3.0')
-      @numero_afiliacao = numero_afiliacao
-      @chave_acesso = chave_acesso
-      @versao = versao
-      @connection = Cielo::Connection.new @numero_afiliacao, @chave_acesso, @versao
+    def initialize(buy_page = :cielo, parameters = {})
+      @buy_page = buy_page
+      @parameters = parameters
+      analysis_parameters
+      @connection = Cielo::Connection.new
     end
 
-    def create!(parameters = {}, buy_page = :cielo)
-      analysis_parameters(parameters, buy_page)
-      message = build_xml(parameters, buy_page)
-      @connection.make_request!(message)
+    attr_reader :parameters, :buy_page
+
+    def create!
+      @connection.make_request!(xml_object)
     end
 
-    def build_xml(parameters = {}, buy_page = :cielo)
-      if buy_page == :store
-        build_store_xml(parameters)
-      else
-        build_cielo_xml(parameters)
-      end
+    def xml
+      xml_object.target!
     end
 
-    def build_store_xml(parameters)
+    def xml_object
+      return @xml if @xml.present?
+      @xml = if buy_page == :store
+                build_store_xml
+              else
+                build_cielo_xml
+              end
+    end
+
+    def build_store_xml
       @connection.xml_builder('requisicao-transacao') do |xml, target|
         if target == :after
           xml.tag!('dados-portador') do
@@ -41,14 +47,14 @@ module Cielo
               xml.tag!('token', '')
             end
           end
-          default_transaction_xml(xml, parameters)
+          default_transaction_xml(xml)
         end
       end
     end
 
-    def build_cielo_xml(parameters = {})
+    def build_cielo_xml
       @connection.xml_builder('requisicao-transacao') do |xml, target|
-        default_transaction_xml(xml, parameters) if target == :after
+        default_transaction_xml(xml) if target == :after
       end
     end
 
@@ -97,7 +103,7 @@ module Cielo
 
     private
 
-    def default_transaction_xml(xml, parameters)
+    def default_transaction_xml(xml)
       xml.tag!('dados-pedido') do
         [:numero, :valor, :moeda, :"data-hora", :idioma, :"soft-descriptor"].each do |key|
           xml.tag!(key.to_s, parameters[key].to_s)
@@ -114,7 +120,8 @@ module Cielo
       xml.tag!('gerar-token', parameters[:"gerar-token"])
     end
 
-    def analysis_parameters(parameters = {}, buy_page = :cielo)
+    def analysis_parameters
+      return if parameters.empty?
       to_analyze = [:numero, :valor, :bandeira, :"url-retorno"]
 
       if buy_page == :store

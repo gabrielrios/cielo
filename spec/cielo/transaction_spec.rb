@@ -14,7 +14,6 @@ describe Cielo::Transaction do
         Cielo::Token.create credit_card_params, :store
       end
 
-      @transaction = Cielo::Transaction.new
       @token_code = token.id
     end
 
@@ -22,7 +21,7 @@ describe Cielo::Transaction do
       params = default_params.merge(token: @token_code, autorizar: 3)
 
       response = VCR.use_cassette('buy_page_create_transaction', preserve_exact_body_bytes: true) do
-        @transaction.create! params, :store
+        Cielo::Transaction.new(:store, params).create!
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
@@ -36,7 +35,7 @@ describe Cielo::Transaction do
       params = default_params.merge(:"gerar-token" => true, autorizar: 3).merge(credit_card_params)
 
       response = VCR.use_cassette('buy_page_create_transaction_and_request_token', preserve_exact_body_bytes: true) do
-        @transaction.create! params, :store
+        Cielo::Transaction.new(:store, params).create!
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
@@ -47,7 +46,7 @@ describe Cielo::Transaction do
       params = default_params.merge(token: @token_code, autorizar: 4) # autorizar: 4 - recurring transaction
 
       response = VCR.use_cassette('buy_page_create_recurring_transaction_with_token', preserve_exact_body_bytes: true) do
-        @transaction.create! params, :store
+        Cielo::Transaction.new(:store, params).create!
       end
 
       expect(response[:transacao][:autenticacao][:eci]).to eql('7') # 7 is when transactions was not autenticated
@@ -57,20 +56,20 @@ describe Cielo::Transaction do
     [:cartao_portador, :cartao_numero, :cartao_validade, :cartao_seguranca, :numero, :valor, :bandeira, :"url-retorno"].each do |parameter|
       it "raises an error when #{parameter} isn't informed" do
         params = default_params.merge(credit_card_params)
-        expect { @transaction.create!(params.except!(parameter), :store) }.to raise_error(Cielo::MissingArgumentError)
+        expect { Cielo::Transaction.new(:store, params.except!(parameter)) }.to raise_error(Cielo::MissingArgumentError)
       end
     end
 
     it 'delivers a successful message and catch' do
       params = default_params.merge(authentication_credit_card_params).merge(autorizar: 2, capturar: 'false')
       response = VCR.use_cassette('buy_page_create_authorization_transaction', preserve_exact_body_bytes: true) do
-        @transaction.create! params, :store
+        Cielo::Transaction.new(:store, params).create!
       end
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
 
       response = VCR.use_cassette('buy_page_requisicao_captura', preserve_exact_body_bytes: true) do
-        @transaction.catch!(response[:transacao][:tid])
+        Cielo::Transaction.new.catch!(response[:transacao][:tid])
       end
     end
 
@@ -78,8 +77,8 @@ describe Cielo::Transaction do
       params = default_params.merge(credit_card_params).merge(autorizar: 3)
 
       response = VCR.use_cassette('buy_page_verify_by_number', preserve_exact_body_bytes: true) do
-        create_response = @transaction.create! params, :store
-        @transaction.verify_by_number!('1')
+        _create_response = Cielo::Transaction.new(:store, params).create!
+        Cielo::Transaction.new.verify_by_number!('1')
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
@@ -87,31 +86,27 @@ describe Cielo::Transaction do
   end
 
   describe 'Buy Page Cielo' do
-    before do
-      @transaction = Cielo::Transaction.new
-    end
-
     [:numero, :valor, :bandeira, :"url-retorno"].each do |parameter|
       it "raises an error when #{parameter} isn't informed" do
-        expect { @transaction.create! default_params.except!(parameter) }.to raise_error(Cielo::MissingArgumentError)
+        expect { Cielo::Transaction.new(:cielo, default_params.except!(parameter)) }.to raise_error(Cielo::MissingArgumentError)
       end
     end
 
     it 'delivers a successful message' do
       response = VCR.use_cassette('cielo_buy_page_create_authorization_transaction', preserve_exact_body_bytes: true) do
-        @transaction.create! default_params
+        Cielo::Transaction.new(default_params).create!
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
       response = VCR.use_cassette('cielo_buy_page_requisicao_captura', preserve_exact_body_bytes: true) do
-        @transaction.catch!(response[:transacao][:tid])
+        Cielo::Transaction.new.catch!(response[:transacao][:tid])
       end
     end
 
     it 'verify the transaction' do
       response = VCR.use_cassette('cielo_buy_page_verify_transaction', preserve_exact_body_bytes: true) do
-        @transaction.verify!('100173489800002FDF7A')
+        Cielo::Transaction.new.verify!('100173489800002FDF7A')
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
@@ -119,13 +114,13 @@ describe Cielo::Transaction do
     end
 
     it 'returns null when no tid is informed' do
-      expect(@transaction.cancel!(nil)).to be_nil
+      expect(Cielo::Transaction.new.cancel!(nil)).to be_nil
     end
 
     it 'cancels a transaction' do
       response = VCR.use_cassette('cielo_buy_page_cancel_transaction', preserve_exact_body_bytes: true) do
-        create_response = @transaction.create! default_params
-        @transaction.cancel!(create_response[:transacao][:tid])
+        create_response = Cielo::Transaction.new(default_params).create!
+        Cielo::Transaction.new.cancel!(create_response[:transacao][:tid])
       end
 
       # Erro 42 - Cancelamento Não está funcionando em ambiente de teste.
