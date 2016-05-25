@@ -12,7 +12,7 @@ module Cielo
     end
 
     def build_xml
-      connection.xml_builder('requisicao-consulta') do |xml, target|
+      connection.xml_builder('upload-lote') do |xml, target|
         if target == :after
           transactions.each do |transaction|
             xml << transaction.xml
