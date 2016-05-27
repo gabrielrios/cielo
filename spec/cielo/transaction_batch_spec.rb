@@ -8,7 +8,7 @@ RSpec.describe Cielo::TransactionBatch do
 
   it 'generates xml for all transactions' do
     transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
-    batch = Cielo::TransactionBatch.new(transactions)
+    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
     xml = batch.xml
 
     xml_transactions = xml.scan('<requisicao-transacao>')
@@ -17,7 +17,7 @@ RSpec.describe Cielo::TransactionBatch do
 
   it 'includes connection data' do
     transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
-    batch = Cielo::TransactionBatch.new(transactions)
+    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
     xml = batch.xml
     expect(xml).to match(/dados-ec/)
   end

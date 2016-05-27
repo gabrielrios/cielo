@@ -13,7 +13,7 @@ describe Cielo::Connection do
 
   describe 'making a request' do
     it 'should make a request' do
-      response = VCR.use_cassette('testing_connection_request_configured_connection', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('testing_connection_request_configured_connection') do
         @connection.request! data: 'Anything'
       end
 
@@ -24,7 +24,7 @@ describe Cielo::Connection do
 
   describe 'passing an access key and a client number' do
     it 'should make a request whithout any problem' do
-      response = VCR.use_cassette('testing_connection_request_using_keys', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('testing_connection_request_using_keys') do
         @connection2.request! data: 'Anything'
       end
 

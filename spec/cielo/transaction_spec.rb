@@ -10,7 +10,7 @@ describe Cielo::Transaction do
       allow(Cielo).to receive(:numero_afiliacao).and_return('1006993069')
       allow(Cielo).to receive(:chave_acesso).and_return('25fbb99741c739dd84d7b06ec78c9bac718838630f30b112d033ce2e621b34f3')
 
-      token = VCR.use_cassette('create_credit_card_token', preserve_exact_body_bytes: true) do
+      token = VCR.use_cassette('create_credit_card_token') do
         Cielo::Token.create credit_card_params, :store
       end
 
@@ -20,7 +20,7 @@ describe Cielo::Transaction do
     it 'delivers a successful message - Autorizar sem passar por autenticação' do
       params = default_params.merge(token: @token_code, autorizar: 3)
 
-      response = VCR.use_cassette('buy_page_create_transaction', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('buy_page_create_transaction') do
         Cielo::Transaction.new(:store, params).create!
       end
 
@@ -34,7 +34,7 @@ describe Cielo::Transaction do
     it 'delivers a successful message and request a card token' do
       params = default_params.merge(:"gerar-token" => true, autorizar: 3).merge(credit_card_params)
 
-      response = VCR.use_cassette('buy_page_create_transaction_and_request_token', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('buy_page_create_transaction_and_request_token') do
         Cielo::Transaction.new(:store, params).create!
       end
 
@@ -45,7 +45,7 @@ describe Cielo::Transaction do
     it 'creates a recurring transaction with token' do
       params = default_params.merge(token: @token_code, autorizar: 4) # autorizar: 4 - recurring transaction
 
-      response = VCR.use_cassette('buy_page_create_recurring_transaction_with_token', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('buy_page_create_recurring_transaction_with_token') do
         Cielo::Transaction.new(:store, params).create!
       end
 
@@ -62,13 +62,13 @@ describe Cielo::Transaction do
 
     it 'delivers a successful message and catch' do
       params = default_params.merge(authentication_credit_card_params).merge(autorizar: 2, capturar: 'false')
-      response = VCR.use_cassette('buy_page_create_authorization_transaction', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('buy_page_create_authorization_transaction') do
         Cielo::Transaction.new(:store, params).create!
       end
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
 
-      response = VCR.use_cassette('buy_page_requisicao_captura', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('buy_page_requisicao_captura') do
         Cielo::Transaction.new(:store).catch!(response[:transacao][:tid])
       end
     end
@@ -76,7 +76,7 @@ describe Cielo::Transaction do
     it 'verify transaction by number' do
       params = default_params.merge(credit_card_params).merge(autorizar: 3)
 
-      response = VCR.use_cassette('buy_page_verify_by_number', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('buy_page_verify_by_number') do
         _create_response = Cielo::Transaction.new(:store, params).create!
         Cielo::Transaction.new(:store).verify_by_number!('1')
       end
@@ -93,19 +93,19 @@ describe Cielo::Transaction do
     end
 
     it 'delivers a successful message' do
-      response = VCR.use_cassette('cielo_buy_page_create_authorization_transaction', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('cielo_buy_page_create_authorization_transaction') do
         Cielo::Transaction.new(:cielo, default_params).create!
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
       expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
-      response = VCR.use_cassette('cielo_buy_page_requisicao_captura', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('cielo_buy_page_requisicao_captura') do
         Cielo::Transaction.new(:cielo).catch!(response[:transacao][:tid])
       end
     end
 
     it 'verify the transaction' do
-      response = VCR.use_cassette('cielo_buy_page_verify_transaction', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('cielo_buy_page_verify_transaction') do
         Cielo::Transaction.new(:cielo).verify!('100173489800002FDF7A')
       end
 
@@ -118,7 +118,7 @@ describe Cielo::Transaction do
     end
 
     it 'cancels a transaction' do
-      response = VCR.use_cassette('cielo_buy_page_cancel_transaction', preserve_exact_body_bytes: true) do
+      response = VCR.use_cassette('cielo_buy_page_cancel_transaction') do
         create_response = Cielo::Transaction.new(:cielo, default_params).create!
         Cielo::Transaction.new(:cielo).cancel!(create_response[:transacao][:tid])
       end
