@@ -24,9 +24,10 @@ module Cielo
     end
 
     def xml_builder(group_name, &block)
-      xml = Builder::XmlMarkup.new
+      xml = Builder::XmlMarkup.new(:indent=>2)
       xml.instruct! :xml, version: '1.0', encoding: 'UTF-8'
-      xml.tag!(group_name, id: Time.now.to_i.to_s, versao: @versao) do
+      xml.tag!(group_name, xmlns: "http://ecommerce.cbmp.com.br",
+               id: Time.now.to_i.to_s, versao: @versao) do
         yield xml, :before
         xml.tag!('dados-ec') do
           xml.numero @numero_afiliacao # Cielo.numero_afiliacao

@@ -72,7 +72,7 @@ module Cielo
       if type == :request
         @connection.xml_builder('requisicao-transacao', &_proc)
       else
-        builder = Builder::XmlMarkup.new
+        builder = Builder::XmlMarkup.new(:indent => 2)
         builder.tag!('requisicao-transacao') { _proc.call(builder, :after) }
         builder
       end
