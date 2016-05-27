@@ -21,4 +21,27 @@ RSpec.describe Cielo::TransactionBatch do
     xml = batch.xml
     expect(xml).to match(/dados-ec/)
   end
+
+  it 'delivers a successful file' do
+    transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
+    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
+
+    response = VCR.use_cassette('upload_batch_file') do
+      batch.create!
+    end
+
+    expect(response[:'retorno-upload-lote'][:'mensagem']).to match(/Seu lote está válido/)
+  end
+
+  it 'receives the batch response' do
+    transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
+    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
+
+    response = VCR.use_cassette('receive_batch_file') do
+      batch.create!
+      batch.receive!
+    end
+
+    expect(response[:'erro']).to be_present
+  end
 end

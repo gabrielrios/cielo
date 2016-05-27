@@ -1,5 +1,4 @@
 require 'bigdecimal'
-require 'pry'
 module Cielo
   class Transaction
     attr_reader :numero_afiliacao
