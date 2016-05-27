@@ -24,7 +24,7 @@ RSpec.describe Cielo::TransactionBatch do
 
   it 'delivers a successful file' do
     transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
-    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
+    batch = Cielo::TransactionBatch.new('999', '2', transactions)
 
     response = VCR.use_cassette('upload_batch_file') do
       batch.create!
@@ -33,15 +33,27 @@ RSpec.describe Cielo::TransactionBatch do
     expect(response[:'retorno-upload-lote'][:'mensagem']).to match(/Seu lote está válido/)
   end
 
-  it 'receives the batch response' do
+  it 'returns proper error' do
     transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
-    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
+    batch = Cielo::TransactionBatch.new('999', '2', transactions)
 
-    response = VCR.use_cassette('receive_batch_file') do
+    response = VCR.use_cassette('duplicate_upload_batch_file') do
       batch.create!
-      batch.receive!
+      batch.create!
     end
 
     expect(response[:'erro']).to be_present
+    expect(response[:'erro'][:'mensagem']).to match(/Número de lote já existente/)
+  end
+
+  it 'receives the batch response' do
+    transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
+    batch = Cielo::TransactionBatch.new('999', '2', transactions)
+
+    response = VCR.use_cassette('receive_batch_file') do
+      batch.receive!
+    end
+
+    expect(response[:'retorno-download-lote']).to be_present
   end
 end

@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://qasecommerce.cielo.com.br/lote/ecommwsecLoteDownload.do
+    body:
+      encoding: US-ASCII
+      base64_string: |
+        bWVuc2FnZW09PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgi
+        Pz4KPHJlcXVpc2ljYW8tZG93bmxvYWQtcmV0b3Juby1sb3RlIHhtbG5zPSJo
+        dHRwOi8vZWNvbW1lcmNlLmNibXAuY29tLmJyIiBpZD0iMTQ2NDM3NTYxMCIg
+        dmVyc2FvPSIxLjIuMSI+CiAgPGRhZG9zLWVjPgogICAgPG51bWVybz4xMDAx
+        NzM0ODk4PC9udW1lcm8+CiAgICA8Y2hhdmU+ZTg0ODI3MTMwYjk4Mzc0NzM2
+        ODFjMjc4NzAwN2RhNTkxNGQ2MzU5OTQ3MDE1YTVjZGIyYjg4NDNkYjBmYTgz
+        MjwvY2hhdmU+CiAgPC9kYWRvcy1lYz4KICA8bnVtZXJvLWxvdGU+MDAwMDAw
+        MDk5OTwvbnVtZXJvLWxvdGU+CjwvcmVxdWlzaWNhby1kb3dubG9hZC1yZXRv
+        cm5vLWxvdGU+Cg==
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 27 May 2016 19:00:26 GMT
+      Server:
+      - Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/0.9.8e-fips-rhel5
+      Content-Length:
+      - '245'
+      Set-Cookie:
+      - JSESSIONID=X6GSXLZKy5nJsP46pznT8NY4zgbhqR5nSJQmCkyhvB0QJqbGH4Ln!-112801639;
+        path=/; HttpOnly
+      X-Powered-By:
+      - Servlet/2.5 JSP/2.1
+      Content-Type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      base64_string: |
+        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iSVNPLTg4NTktMSIgPz4g
+        CjxyZXRvcm5vLWRvd25sb2FkLWxvdGUgeG1sbnM9Imh0dHA6Ly9lY29tbWVy
+        Y2UuY2JtcC5jb20uYnIiPgogIDxlcnJvPgogICAgPGNvZGlnbz44MTwvY29k
+        aWdvPgogICAgPG1lbnNhZ2VtPlVwbG9hZCBSZWFsaXphZG8uIEFndWFyZGFu
+        ZG8gUHJvY2Vzc2FtZW50by48L21lbnNhZ2VtPgogIDwvZXJybz4KPC9yZXRv
+        cm5vLWRvd25sb2FkLWxvdGU+DQo=
+    http_version: 
+  recorded_at: Fri, 27 May 2016 19:00:11 GMT
+recorded_with: VCR 3.0.1

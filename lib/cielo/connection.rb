@@ -4,11 +4,15 @@ module Cielo
     attr_reader :numero_afiliacao
     attr_reader :chave_acesso
     attr_reader :versao
+    attr_accessor :path
 
-    def initialize(numero_afiliacao = Cielo.numero_afiliacao, chave_acesso = Cielo.chave_acesso, versao = '1.2.1')
+    def initialize(numero_afiliacao = Cielo.numero_afiliacao,
+                   chave_acesso = Cielo.chave_acesso,
+                   versao = '1.2.1')
       @environment = eval(Cielo.environment.to_s.capitalize)
       @numero_afiliacao = numero_afiliacao
       @chave_acesso = chave_acesso
+      @path = @environment::WS_PATH
       @versao = versao
       port = 443
       @http = Net::HTTP.new(@environment::BASE_URL, port)
@@ -20,7 +24,7 @@ module Cielo
 
     def request!(params = {})
       str_params = params.map { |key, value| "#{key}=#{value}" }.join('&')
-      @http.request_post(environment::WS_PATH, str_params)
+      @http.request_post(path, str_params)
     end
 
     def xml_builder(group_name, &block)

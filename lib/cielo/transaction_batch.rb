@@ -6,6 +6,7 @@ module Cielo
       @batch_number = batch_number
       @operation = operation
       @connection = Cielo::Connection.new
+      @connection.path = "/lote/ecommwsecLoteDownload.do"
       @transactions = transactions
     end
 
@@ -21,12 +22,11 @@ module Cielo
 
     def create!
       post_body = []
-      post_body << "--#{BOUNDARY}rn"
-      post_body << "Content-Disposition: form-data; name=\"mensagem\"; filename=\"#{filename}\"rn"
-      post_body << "Content-Type: text/plainrn"
-      post_body << "rn"
+      post_body << "--#{BOUNDARY}\r\n"
+      post_body << "Content-Disposition: form-data; name=\"mensagem\"; filename=\"#{filename}\"\r\n"
+      post_body << "\r\n"
       post_body << xml
-      post_body << "rn--#{BOUNDARY}--rn"
+      post_body << "\r\n--#{BOUNDARY}--\r\n"
 
       http = Net::HTTP.new(@connection.environment::BASE_URL, 443)
       http.ssl_version = :TLSv1 if @http.respond_to? :ssl_version
@@ -39,7 +39,7 @@ module Cielo
     end
 
     def filename
-      "ECOMM_#{Cielo.numero_afiliacao}_#{@operation}_#{date}_#{batch_number}.xml"
+      "ECOMM_#{Cielo.numero_afiliacao}_#{@operation.to_s.rjust(2, '0')}_#{date}_#{batch_number}.xml"
     end
 
     def date
@@ -54,7 +54,7 @@ module Cielo
     def build_xml
       connection.xml_builder('requisicao-lote') do |xml, target|
         if target == :after
-          xml.tag!('numero-lote', batch_number)
+          xml.tag!('numero-lote', @batch_number)
           xml.tag!('tipo-operacao', operation)
           xml.tag!('lista-requisicoes') do
             transactions.each do |transaction|

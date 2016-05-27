@@ -1,0 +1,183 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://qasecommerce.cielo.com.br/lote/ecommwsecLoteUpload.do
+    body:
+      encoding: UTF-8
+      base64_string: |
+        LS1BYUIwM3gNCkNvbnRlbnQtRGlzcG9zaXRpb246IGZvcm0tZGF0YTsgbmFt
+        ZT0ibWVuc2FnZW0iOyBmaWxlbmFtZT0iRUNPTU1fMTAwMTczNDg5OF8wMl8y
+        MDE2MDUyN18wMDAwMDAwOTk5LnhtbCINCg0KPD94bWwgdmVyc2lvbj0iMS4w
+        IiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlcXVpc2ljYW8tbG90ZSB4bWxucz0i
+        aHR0cDovL2Vjb21tZXJjZS5jYm1wLmNvbS5iciIgdmVyc2FvPSIxLjIuMSI+
+        CiAgPGRhZG9zLWVjPgogICAgPG51bWVybz4xMDAxNzM0ODk4PC9udW1lcm8+
+        CiAgICA8Y2hhdmU+ZTg0ODI3MTMwYjk4Mzc0NzM2ODFjMjc4NzAwN2RhNTkx
+        NGQ2MzU5OTQ3MDE1YTVjZGIyYjg4NDNkYjBmYTgzMjwvY2hhdmU+CiAgPC9k
+        YWRvcy1lYz4KICA8bnVtZXJvLWxvdGU+OTk5PC9udW1lcm8tbG90ZT4KICA8
+        dGlwby1vcGVyYWNhbz4yPC90aXBvLW9wZXJhY2FvPgogIDxsaXN0YS1yZXF1
+        aXNpY29lcz4KPHJlcXVpc2ljYW8tdHJhbnNhY2FvPgogIDxkYWRvcy1wb3J0
+        YWRvcj4KICAgIDxudW1lcm8+NDAxMjAwMTAzODQ0MzMzNTwvbnVtZXJvPgog
+        ICAgPHZhbGlkYWRlPjIwMTgwNTwvdmFsaWRhZGU+CiAgICA8aW5kaWNhZG9y
+        PjE8L2luZGljYWRvcj4KICAgIDxjb2RpZ28tc2VndXJhbmNhPjEyMzwvY29k
+        aWdvLXNlZ3VyYW5jYT4KICAgIDxub21lLXBvcnRhZG9yPkNpZWxvIFZpc2Eg
+        VGVzdCBDcmVkaXQgQ2FyZDwvbm9tZS1wb3J0YWRvcj4KICAgIDx0b2tlbj48
+        L3Rva2VuPgogIDwvZGFkb3MtcG9ydGFkb3I+CiAgPGRhZG9zLXBlZGlkbz4K
+        ICAgIDxudW1lcm8+MTwvbnVtZXJvPgogICAgPHZhbG9yPjEwMDA8L3ZhbG9y
+        PgogICAgPG1vZWRhPjk4NjwvbW9lZGE+CiAgICA8ZGF0YS1ob3JhPjIwMTYt
+        MDUtMjdUMTU6NTI6NDU8L2RhdGEtaG9yYT4KICAgIDxpZGlvbWE+UFQ8L2lk
+        aW9tYT4KICAgIDxzb2Z0LWRlc2NyaXB0b3I+PC9zb2Z0LWRlc2NyaXB0b3I+
+        CiAgPC9kYWRvcy1wZWRpZG8+CiAgPGZvcm1hLXBhZ2FtZW50bz4KICAgIDxi
+        YW5kZWlyYT52aXNhPC9iYW5kZWlyYT4KICAgIDxwcm9kdXRvPjE8L3Byb2R1
+        dG8+CiAgICA8cGFyY2VsYXM+MTwvcGFyY2VsYXM+CiAgPC9mb3JtYS1wYWdh
+        bWVudG8+CiAgPHVybC1yZXRvcm5vPmh0dHA6Ly9zb21lLnRoaW5nLmNvbTwv
+        dXJsLXJldG9ybm8+CiAgPGF1dG9yaXphcj4yPC9hdXRvcml6YXI+CiAgPGNh
+        cHR1cmFyPnRydWU8L2NhcHR1cmFyPgogIDxnZXJhci10b2tlbj5mYWxzZTwv
+        Z2VyYXItdG9rZW4+CjwvcmVxdWlzaWNhby10cmFuc2FjYW8+CjxyZXF1aXNp
+        Y2FvLXRyYW5zYWNhbz4KICA8ZGFkb3MtcG9ydGFkb3I+CiAgICA8bnVtZXJv
+        PjQwMTIwMDEwMzg0NDMzMzU8L251bWVybz4KICAgIDx2YWxpZGFkZT4yMDE4
+        MDU8L3ZhbGlkYWRlPgogICAgPGluZGljYWRvcj4xPC9pbmRpY2Fkb3I+CiAg
+        ICA8Y29kaWdvLXNlZ3VyYW5jYT4xMjM8L2NvZGlnby1zZWd1cmFuY2E+CiAg
+        ICA8bm9tZS1wb3J0YWRvcj5DaWVsbyBWaXNhIFRlc3QgQ3JlZGl0IENhcmQ8
+        L25vbWUtcG9ydGFkb3I+CiAgICA8dG9rZW4+PC90b2tlbj4KICA8L2RhZG9z
+        LXBvcnRhZG9yPgogIDxkYWRvcy1wZWRpZG8+CiAgICA8bnVtZXJvPjE8L251
+        bWVybz4KICAgIDx2YWxvcj4xMDAwPC92YWxvcj4KICAgIDxtb2VkYT45ODY8
+        L21vZWRhPgogICAgPGRhdGEtaG9yYT4yMDE2LTA1LTI3VDE1OjUyOjQ1PC9k
+        YXRhLWhvcmE+CiAgICA8aWRpb21hPlBUPC9pZGlvbWE+CiAgICA8c29mdC1k
+        ZXNjcmlwdG9yPjwvc29mdC1kZXNjcmlwdG9yPgogIDwvZGFkb3MtcGVkaWRv
+        PgogIDxmb3JtYS1wYWdhbWVudG8+CiAgICA8YmFuZGVpcmE+dmlzYTwvYmFu
+        ZGVpcmE+CiAgICA8cHJvZHV0bz4xPC9wcm9kdXRvPgogICAgPHBhcmNlbGFz
+        PjE8L3BhcmNlbGFzPgogIDwvZm9ybWEtcGFnYW1lbnRvPgogIDx1cmwtcmV0
+        b3Jubz5odHRwOi8vc29tZS50aGluZy5jb208L3VybC1yZXRvcm5vPgogIDxh
+        dXRvcml6YXI+MjwvYXV0b3JpemFyPgogIDxjYXB0dXJhcj50cnVlPC9jYXB0
+        dXJhcj4KICA8Z2VyYXItdG9rZW4+ZmFsc2U8L2dlcmFyLXRva2VuPgo8L3Jl
+        cXVpc2ljYW8tdHJhbnNhY2FvPgogIDwvbGlzdGEtcmVxdWlzaWNvZXM+Cjwv
+        cmVxdWlzaWNhby1sb3RlPgoNCi0tQWFCMDN4LS0NCg==
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data, boundary=AaB03x
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 27 May 2016 18:53:00 GMT
+      Server:
+      - Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/0.9.8e-fips-rhel5
+      Content-Length:
+      - '207'
+      Set-Cookie:
+      - JSESSIONID=4SQtXLXM1BPpplYD5LsS9fL5kWB1QLRLXp1xDkJTLF1TyJGqhpP1!-112801639;
+        path=/; HttpOnly
+      X-Powered-By:
+      - Servlet/2.5 JSP/2.1
+      Content-Type:
+      - text/html;charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        PD9YTUwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPGVycm8g
+        eG1sbnM9Imh0dHA6Ly9lY29tbWVyY2UuY2JtcC5jb20uYnIiPgogIDxjb2Rp
+        Z28+MTAwPC9jb2RpZ28+CiAgPG1lbnNhZ2VtPk5vbWVuY2xhdHVyYSBpbnbD
+        oWxpZGEuIApOw7ptZXJvIGRlIGxvdGUgasOhIGV4aXN0ZW50ZSBvdSBpbnbD
+        oWxpZG8uPC9tZW5zYWdlbT4KPC9lcnJvPg0K
+    http_version: 
+  recorded_at: Fri, 27 May 2016 18:52:45 GMT
+- request:
+    method: post
+    uri: https://qasecommerce.cielo.com.br/lote/ecommwsecLoteUpload.do
+    body:
+      encoding: UTF-8
+      base64_string: |
+        LS1BYUIwM3gNCkNvbnRlbnQtRGlzcG9zaXRpb246IGZvcm0tZGF0YTsgbmFt
+        ZT0ibWVuc2FnZW0iOyBmaWxlbmFtZT0iRUNPTU1fMTAwMTczNDg5OF8wMl8y
+        MDE2MDUyN18wMDAwMDAwOTk5LnhtbCINCg0KPD94bWwgdmVyc2lvbj0iMS4w
+        IiBlbmNvZGluZz0iVVRGLTgiPz4KPHJlcXVpc2ljYW8tbG90ZSB4bWxucz0i
+        aHR0cDovL2Vjb21tZXJjZS5jYm1wLmNvbS5iciIgdmVyc2FvPSIxLjIuMSI+
+        CiAgPGRhZG9zLWVjPgogICAgPG51bWVybz4xMDAxNzM0ODk4PC9udW1lcm8+
+        CiAgICA8Y2hhdmU+ZTg0ODI3MTMwYjk4Mzc0NzM2ODFjMjc4NzAwN2RhNTkx
+        NGQ2MzU5OTQ3MDE1YTVjZGIyYjg4NDNkYjBmYTgzMjwvY2hhdmU+CiAgPC9k
+        YWRvcy1lYz4KICA8bnVtZXJvLWxvdGU+OTk5PC9udW1lcm8tbG90ZT4KICA8
+        dGlwby1vcGVyYWNhbz4yPC90aXBvLW9wZXJhY2FvPgogIDxsaXN0YS1yZXF1
+        aXNpY29lcz4KPHJlcXVpc2ljYW8tdHJhbnNhY2FvPgogIDxkYWRvcy1wb3J0
+        YWRvcj4KICAgIDxudW1lcm8+NDAxMjAwMTAzODQ0MzMzNTwvbnVtZXJvPgog
+        ICAgPHZhbGlkYWRlPjIwMTgwNTwvdmFsaWRhZGU+CiAgICA8aW5kaWNhZG9y
+        PjE8L2luZGljYWRvcj4KICAgIDxjb2RpZ28tc2VndXJhbmNhPjEyMzwvY29k
+        aWdvLXNlZ3VyYW5jYT4KICAgIDxub21lLXBvcnRhZG9yPkNpZWxvIFZpc2Eg
+        VGVzdCBDcmVkaXQgQ2FyZDwvbm9tZS1wb3J0YWRvcj4KICAgIDx0b2tlbj48
+        L3Rva2VuPgogIDwvZGFkb3MtcG9ydGFkb3I+CiAgPGRhZG9zLXBlZGlkbz4K
+        ICAgIDxudW1lcm8+MTwvbnVtZXJvPgogICAgPHZhbG9yPjEwMDA8L3ZhbG9y
+        PgogICAgPG1vZWRhPjk4NjwvbW9lZGE+CiAgICA8ZGF0YS1ob3JhPjIwMTYt
+        MDUtMjdUMTU6NTI6NDU8L2RhdGEtaG9yYT4KICAgIDxpZGlvbWE+UFQ8L2lk
+        aW9tYT4KICAgIDxzb2Z0LWRlc2NyaXB0b3I+PC9zb2Z0LWRlc2NyaXB0b3I+
+        CiAgPC9kYWRvcy1wZWRpZG8+CiAgPGZvcm1hLXBhZ2FtZW50bz4KICAgIDxi
+        YW5kZWlyYT52aXNhPC9iYW5kZWlyYT4KICAgIDxwcm9kdXRvPjE8L3Byb2R1
+        dG8+CiAgICA8cGFyY2VsYXM+MTwvcGFyY2VsYXM+CiAgPC9mb3JtYS1wYWdh
+        bWVudG8+CiAgPHVybC1yZXRvcm5vPmh0dHA6Ly9zb21lLnRoaW5nLmNvbTwv
+        dXJsLXJldG9ybm8+CiAgPGF1dG9yaXphcj4yPC9hdXRvcml6YXI+CiAgPGNh
+        cHR1cmFyPnRydWU8L2NhcHR1cmFyPgogIDxnZXJhci10b2tlbj5mYWxzZTwv
+        Z2VyYXItdG9rZW4+CjwvcmVxdWlzaWNhby10cmFuc2FjYW8+CjxyZXF1aXNp
+        Y2FvLXRyYW5zYWNhbz4KICA8ZGFkb3MtcG9ydGFkb3I+CiAgICA8bnVtZXJv
+        PjQwMTIwMDEwMzg0NDMzMzU8L251bWVybz4KICAgIDx2YWxpZGFkZT4yMDE4
+        MDU8L3ZhbGlkYWRlPgogICAgPGluZGljYWRvcj4xPC9pbmRpY2Fkb3I+CiAg
+        ICA8Y29kaWdvLXNlZ3VyYW5jYT4xMjM8L2NvZGlnby1zZWd1cmFuY2E+CiAg
+        ICA8bm9tZS1wb3J0YWRvcj5DaWVsbyBWaXNhIFRlc3QgQ3JlZGl0IENhcmQ8
+        L25vbWUtcG9ydGFkb3I+CiAgICA8dG9rZW4+PC90b2tlbj4KICA8L2RhZG9z
+        LXBvcnRhZG9yPgogIDxkYWRvcy1wZWRpZG8+CiAgICA8bnVtZXJvPjE8L251
+        bWVybz4KICAgIDx2YWxvcj4xMDAwPC92YWxvcj4KICAgIDxtb2VkYT45ODY8
+        L21vZWRhPgogICAgPGRhdGEtaG9yYT4yMDE2LTA1LTI3VDE1OjUyOjQ1PC9k
+        YXRhLWhvcmE+CiAgICA8aWRpb21hPlBUPC9pZGlvbWE+CiAgICA8c29mdC1k
+        ZXNjcmlwdG9yPjwvc29mdC1kZXNjcmlwdG9yPgogIDwvZGFkb3MtcGVkaWRv
+        PgogIDxmb3JtYS1wYWdhbWVudG8+CiAgICA8YmFuZGVpcmE+dmlzYTwvYmFu
+        ZGVpcmE+CiAgICA8cHJvZHV0bz4xPC9wcm9kdXRvPgogICAgPHBhcmNlbGFz
+        PjE8L3BhcmNlbGFzPgogIDwvZm9ybWEtcGFnYW1lbnRvPgogIDx1cmwtcmV0
+        b3Jubz5odHRwOi8vc29tZS50aGluZy5jb208L3VybC1yZXRvcm5vPgogIDxh
+        dXRvcml6YXI+MjwvYXV0b3JpemFyPgogIDxjYXB0dXJhcj50cnVlPC9jYXB0
+        dXJhcj4KICA8Z2VyYXItdG9rZW4+ZmFsc2U8L2dlcmFyLXRva2VuPgo8L3Jl
+        cXVpc2ljYW8tdHJhbnNhY2FvPgogIDwvbGlzdGEtcmVxdWlzaWNvZXM+Cjwv
+        cmVxdWlzaWNhby1sb3RlPgoNCi0tQWFCMDN4LS0NCg==
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data, boundary=AaB03x
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 27 May 2016 18:53:01 GMT
+      Server:
+      - Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/0.9.8e-fips-rhel5
+      Content-Length:
+      - '207'
+      Set-Cookie:
+      - JSESSIONID=T2p2XLXNTJBrLQ6FdsqQpT0YnKQ7M4wr1THL4nFwZtbhQ1TYbv12!-112801639;
+        path=/; HttpOnly
+      X-Powered-By:
+      - Servlet/2.5 JSP/2.1
+      Content-Type:
+      - text/html;charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        PD9YTUwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPGVycm8g
+        eG1sbnM9Imh0dHA6Ly9lY29tbWVyY2UuY2JtcC5jb20uYnIiPgogIDxjb2Rp
+        Z28+MTAwPC9jb2RpZ28+CiAgPG1lbnNhZ2VtPk5vbWVuY2xhdHVyYSBpbnbD
+        oWxpZGEuIApOw7ptZXJvIGRlIGxvdGUgasOhIGV4aXN0ZW50ZSBvdSBpbnbD
+        oWxpZG8uPC9tZW5zYWdlbT4KPC9lcnJvPg0K
+    http_version: 
+  recorded_at: Fri, 27 May 2016 18:52:45 GMT
+recorded_with: VCR 3.0.1
