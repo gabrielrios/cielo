@@ -2,10 +2,12 @@ module Cielo
   class TransactionBatch
     BOUNDARY = "AaB03x"
 
-    def initialize(batch_number, operation, transactions)
+    def initialize(batch_number, operation, transactions,
+                   affiliation_number = Cielo.numero_afiliacao,
+                   access_key = Cielo.chave_acesso)
       @batch_number = batch_number
       @operation = operation
-      @connection = Cielo::Connection.new
+      @connection = Cielo::Connection.new(affiliation_number, access_key)
       @connection.path = "/lote/ecommwsecLoteDownload.do"
       @transactions = transactions
     end
@@ -39,7 +41,7 @@ module Cielo
     end
 
     def filename
-      "ECOMM_#{Cielo.numero_afiliacao}_#{@operation.to_s.rjust(2, '0')}_#{date}_#{batch_number}.xml"
+      "ECOMM_#{@connection.numero_afiliacao}_#{@operation.to_s.rjust(2, '0')}_#{date}_#{batch_number}.xml"
     end
 
     def date

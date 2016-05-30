@@ -5,11 +5,14 @@ module Cielo
     attr_reader :chave_acesso
     attr_reader :versao
 
-    def initialize(buy_page = :cielo, parameters = {})
+    def initialize(buy_page = :cielo, parameters = {},
+                   affiliation_number = Cielo.numero_afiliacao,
+                   access_key = Cielo.chave_acesso)
+
       @buy_page = buy_page
       @parameters = parameters
       analysis_parameters
-      @connection = Cielo::Connection.new
+      @connection = Cielo::Connection.new(affiliation_number, access_key)
     end
 
     attr_reader :parameters, :buy_page
