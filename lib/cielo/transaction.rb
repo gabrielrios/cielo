@@ -75,7 +75,7 @@ module Cielo
         @connection.xml_builder('requisicao-transacao', &_proc)
       else
         builder = Builder::XmlMarkup.new(:indent => 2)
-        builder.tag!('requisicao-transacao') { _proc.call(builder, :after) }
+        builder.tag!('requisicao-transacao', { id: Time.now.to_i, versao: @connection.versao }) { _proc.call(builder, :after) }
         builder
       end
     end

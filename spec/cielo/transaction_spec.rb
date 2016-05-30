@@ -17,6 +17,12 @@ describe Cielo::Transaction do
       @token_code = token.id
     end
 
+    it 'generates valid xml' do
+      params = default_params.merge(token: @token_code, autorizar: 3)
+      transaction = Cielo::Transaction.new(:store, params)
+      expect(transaction.xml(:request)).to pass_validation('docs/ecm-ec.xsd')
+    end
+
     it 'delivers a successful message - Autorizar sem passar por autenticação' do
       params = default_params.merge(token: @token_code, autorizar: 3)
 

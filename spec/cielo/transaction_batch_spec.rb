@@ -6,12 +6,18 @@ RSpec.describe Cielo::TransactionBatch do
 
   let(:transaction_params) { default_params.merge(credit_card_params) }
 
+  it 'validates against the xsd' do
+    transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
+    batch = Cielo::TransactionBatch.new('9999', '2', transactions)
+    expect(batch.xml).to pass_validation('docs/ecm-lote.xsd')
+  end
+
   it 'generates xml for all transactions' do
     transactions = 2.times.map{|t| Cielo::Transaction.new(:store, transaction_params) }
     batch = Cielo::TransactionBatch.new('9999', '2', transactions)
     xml = batch.xml
 
-    xml_transactions = xml.scan('<requisicao-transacao>')
+    xml_transactions = xml.scan(/<requisicao-transacao .*>/)
     expect(xml_transactions.size).to eq(2)
   end
 

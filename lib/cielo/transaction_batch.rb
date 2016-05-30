@@ -54,7 +54,7 @@ module Cielo
 
 
     def build_xml
-      connection.xml_builder('requisicao-lote') do |xml, target|
+      connection.xml_builder('requisicao-lote', {}) do |xml, target|
         if target == :after
           xml.tag!('numero-lote', @batch_number)
           xml.tag!('tipo-operacao', operation)
