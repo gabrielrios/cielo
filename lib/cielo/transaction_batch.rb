@@ -70,7 +70,7 @@ module Cielo
     def return_xml
       connection.xml_builder('requisicao-download-retorno-lote') do |xml,target|
         if target == :after
-          xml.tag!('numero-lote', batch_number)
+          xml.tag!('numero-lote', @batch_number)
         end
       end
     end
