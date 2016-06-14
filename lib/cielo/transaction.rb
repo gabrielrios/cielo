@@ -130,7 +130,11 @@ module Cielo
           to_analyze.concat([:token])
         else
           to_analyze.concat([:cartao_numero, :cartao_validade, :cartao_portador])
-          to_analyze.concat([:cartao_seguranca]) unless ['1.0.0', '1.1.0', '1.1.1'].include?(@versao)
+          unless ['1.0.0', '1.1.0', '1.1.1'].include?(@versao)
+            if parameters[:cartao_indicador].to_s == '1'
+              to_analyze.concat([:cartao_seguranca])
+            end
+          end
         end
       end
 
@@ -146,7 +150,7 @@ module Cielo
       parameters[:autorizar] = '2' unless parameters[:autorizar]
       parameters[:capturar] = 'true' unless parameters[:capturar]
       parameters[:"url-retorno"] = Cielo.return_path unless parameters[:"url-retorno"]
-      parameters[:cartao_indicador] = '1' unless parameters[:cartao_indicador] && buy_page == :buy_page_store
+      parameters[:cartao_indicador] = '1' unless parameters[:cartao_indicador] && buy_page == :store
       parameters[:"gerar-token"] = false unless parameters[:"gerar-token"]
 
       parameters

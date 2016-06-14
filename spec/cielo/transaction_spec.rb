@@ -59,11 +59,21 @@ describe Cielo::Transaction do
       expect(response[:transacao][:autorizacao][:mensagem]).to eql('Transação autorizada')
     end
 
-    [:cartao_portador, :cartao_numero, :cartao_validade, :cartao_seguranca, :numero, :valor, :bandeira, :"url-retorno"].each do |parameter|
+    [:cartao_portador, :cartao_numero, :cartao_validade, :numero, :valor, :bandeira, :"url-retorno"].each do |parameter|
       it "raises an error when #{parameter} isn't informed" do
         params = default_params.merge(credit_card_params)
         expect { Cielo::Transaction.new(:store, params.except!(parameter)) }.to raise_error(Cielo::MissingArgumentError)
       end
+    end
+
+    it 'accepts empty cartao_segurancao if indicador is not 1' do
+      params = default_params.merge(credit_card_params).merge(:cartao_seguranca => nil, :cartao_indicador => '0')
+      expect { Cielo::Transaction.new(:store, params) }.to_not raise_error
+    end
+
+    it "raises an error when cartao_segurancao isn't informed and indicador is 1" do
+      params = default_params.merge(credit_card_params).merge(:cartao_seguranca => nil, :cartao_indicador => '1')
+      expect { Cielo::Transaction.new(:store, params) }.to raise_error(Cielo::MissingArgumentError)
     end
 
     it 'delivers a successful message and catch' do
