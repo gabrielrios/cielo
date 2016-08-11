@@ -45,7 +45,7 @@ describe Cielo::Transaction do
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
-      expect(response[:transacao][:token][:"dados-token"][:"codigo-token"]).to_not be_nil
+      expect(response[:transacao][:token][:dados_token][:codigo_token]).to_not be_nil
     end
 
     it 'creates a recurring transaction with token' do
@@ -82,7 +82,7 @@ describe Cielo::Transaction do
         Cielo::Transaction.new(:store, params).create!
       end
       expect(response[:transacao][:tid]).to_not be_nil
-      expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
+      expect(response[:transacao][:url_autenticacao]).to_not be_nil
 
       response = VCR.use_cassette('buy_page_requisicao_captura') do
         Cielo::Transaction.new(:store).catch!(response[:transacao][:tid])
@@ -114,7 +114,7 @@ describe Cielo::Transaction do
       end
 
       expect(response[:transacao][:tid]).to_not be_nil
-      expect(response[:transacao][:"url-autenticacao"]).to_not be_nil
+      expect(response[:transacao][:url_autenticacao]).to_not be_nil
       response = VCR.use_cassette('cielo_buy_page_requisicao_captura') do
         Cielo::Transaction.new(:cielo).catch!(response[:transacao][:tid])
       end

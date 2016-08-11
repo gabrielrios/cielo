@@ -52,23 +52,11 @@ module Cielo
     def parse_response(response)
       case response
       when Net::HTTPSuccess
-        document = REXML::Document.new(response.body)
-        parse_elements(document.elements)
+        hash = Hash.from_xml(response.body)
+        ActiveSupport::HashWithIndifferentAccess.new(hash)
       else
         { erro: { codigo: '000', mensagem: "Impossível contactar o servidor" } }
       end
-    end
-
-    def parse_elements(elements)
-      map = {}
-      elements.each do |element|
-        element_map = {}
-        element_map = element.text if element.elements.empty? && element.attributes.empty?
-        element_map['value'] = element.text if element.elements.empty? && !element.attributes.empty?
-        element_map.merge!(parse_elements(element.elements)) unless element.elements.empty?
-        map[element.name] = element_map
-      end
-      map.symbolize_keys
     end
   end
 end

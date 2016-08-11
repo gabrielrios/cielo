@@ -36,7 +36,7 @@ RSpec.describe Cielo::TransactionBatch do
       batch.create!
     end
 
-    expect(response[:'retorno-upload-lote'][:'mensagem']).to match(/Seu lote está válido/)
+    expect(response[:retorno_upload_lote][:mensagem]).to match(/Seu lote está válido/)
   end
 
   it 'returns proper error' do
@@ -60,6 +60,6 @@ RSpec.describe Cielo::TransactionBatch do
       batch.receive!
     end
 
-    expect(response[:'retorno-download-lote']).to be_present
+    expect(response[:retorno_download_lote]).to be_present
   end
 end
