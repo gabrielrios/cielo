@@ -106,7 +106,7 @@ module Cielo
 
     def default_transaction_xml(xml)
       xml.tag!('dados-pedido') do
-        [:numero, :valor, :moeda, :"data-hora", :idioma, :"soft-descriptor"].each do |key|
+        [:numero, :valor, :moeda, :"data-hora", :descricao, :idioma, :"soft-descriptor"].each do |key|
           xml.tag!(key.to_s, parameters[key].to_s)
         end
       end
